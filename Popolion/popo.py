@@ -14,25 +14,22 @@ from urllib.parse import urlencode
 from paginator import Pages
 
 ###-- Invitation Link --###
-#https://discordapp.com/api/oauth2/authorize?client_id=336363921466195968&scope=bot&permissions=0
+#https://discordapp.com/api/oauth2/authorize?client_id=441691408630546443&scope=bot&permissions=0
 
 bot = commands.Bot(command_prefix='!popo ', description='just another popolion bot', pm_help = True)
 
 bot.remove_command("help")
 
 
-VERSION='0.3.1'
+VERSION='0.0.1'
 CHANGELOG="""
 ```md
-[Changelog](version: 0.3.1)
+[Changelog](version: 0.0.1)
 ```
 ```md
 # Change:
 * Fix:
-    - Tidy up some stuff
-
-# Extra:
-* Contact @Jiyuu#6312 for err... w/e(?)
+    - Birth of Popo
 ```
 """
 
@@ -290,7 +287,7 @@ async def lv(ctx):
 ###-- invite --###
 @bot.command(aliases=['invite'])
 async def inv():
-    invt = "https://discordapp.com/api/oauth2/authorize?client_id=336363921466195968&scope=bot&permissions=0"
+    invt = "https://discordapp.com/api/oauth2/authorize?client_id=441691408630546443&scope=bot&permissions=0"
     await bot.say("**[Use this link to invite me to your server.]**\n\n" + invt)
 
 ###-- ranking --###
