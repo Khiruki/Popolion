@@ -74,7 +74,9 @@ async def on_ready():
     # with open(os.path.join(__location__, 'db.json'), 'w') as f:
     #     json.dump(db, f, indent=4)
 
-    await bot.change_presence(game=discord.Game(name="!popo help"), status=discord.Status("online"))
+	activity = discord.Game(name="!popo help")
+	await client.change_presence(status=discord.Status("online"), activity=activity)
+
 
     print('========================================')
     print('            Are you ready popo?!        ')
@@ -179,9 +181,6 @@ async def help(ctx):
 
 # inv / invite:
   get my invitation link
-
-# pccu:
-  get tos's player statistics
 
 # lv / leveling:
   get link for leveling guide (reddit)
@@ -299,7 +298,7 @@ def get_choice(r):
 @bot.command(pass_context=True, aliases=['item'], no_pm=True)
 async def get(ctx, *name):
 
-    await bot.type()
+    await bot.send_typing(ctx.channel)
 
     # get keyword #
     name = '+'.join(name)
@@ -374,7 +373,7 @@ async def get(ctx, *name):
 @bot.command(pass_context=True, no_pm=True)
 async def skill(ctx, *job):
 
-    await bot.type()
+    await bot.send_typing(ctx.channel)
 
     # get keyword #
     __location__ = os.path.realpath( os.path.join(os.getcwd(), os.path.dirname(__file__)))
@@ -466,7 +465,7 @@ async def skill(ctx, *job):
 @bot.command(pass_context=True, no_pm=True)
 async def news(ctx):
 
-    await bot.type()
+    await bot.send_typing(ctx.channel)
 
     r = urllib.request.urlopen('https://treeofsavior.com/page/news/').read()
     soup = BeautifulSoup(r, 'html.parser')
@@ -488,43 +487,6 @@ async def news(ctx):
 
     nlist = "".join(news_list)# for item in news_list
     embed.add_field(name="Patch Notes & News", value=nlist, inline = False)
-
-    await bot.say(embed=embed)
-
-### get PCCU from steamspy ###
-@bot.command(pass_context=True, no_pm=True)
-async def pccu(ctx):
-
-    await bot.type()
-
-    url = 'http://steamcharts.com/app/372000'
-
-    user_agent = 'Mozilla/5.0 (Windows NT 6.1; Win64; x64)'
-    headers = { 'User-Agent' : user_agent }
-
-    req = urllib.request.Request(url, headers=headers)
-
-    r = urllib.request.urlopen(req).read()
-    soup = BeautifulSoup(r, 'html.parser')
-    sta = soup.find_all('div', {"class": 'app-stat'})
-
-    list1 = []
-    for req in sta:
-        player = int(req.find('span', {"class": 'num'}).get_text())
-        list1.append('{:,}'.format(player))
-
-    embed = discord.Embed(colour=discord.Colour(0x1abc9c), title="Tree of Savior (English Ver.)", description="Tree of Savior (abbreviated as TOS thereafter) is an MMORPG in which you embark on a journey to search for the goddesses in the world of chaos. Fairy-tale like colors accompanied with beautiful graphics in TOS will have you reminiscing about precious moments all throughout the game.\n\n[steamdb.info](https://steamdb.info/app/372000/graphs/)\n[steamspy.com](https://steamspy.com/app/372000)\n[steamcharts.com](http://steamcharts.com/app/372000)\n", timestamp=datetime.datetime.now())
-
-    embed.set_image(url="http://cdn.akamai.steamstatic.com/steam/apps/372000/header.jpg")
-    embed.set_thumbnail(url="http://bestonlinegamesreview.com/wp-content/uploads/2016/04/p1_2006411_5eae6fd9.png")
-    embed.set_author(name="Online Player Tracker", url="https://treeofsavior.com", icon_url="http://bestonlinegamesreview.com/wp-content/uploads/2016/04/p1_2006411_5eae6fd9.png")
-    embed.set_footer(text="tree of savior - a buggy mmorpg")
-
-    # nlist = "".join(news_list)# for item in news_list
-    # embed.add_field(name="Right Now", value=sta[0].find('strong').get_text(), inline = False)
-    embed.add_field(name="Right Now", value=list1[0], inline = True)
-    embed.add_field(name="24 Hour Peak", value=list1[1], inline = False)
-    embed.add_field(name="All The Time Peak (2 yrs ago)", value=list1[2], inline = False)
 
     await bot.say(embed=embed)
 

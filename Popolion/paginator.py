@@ -36,7 +36,7 @@ class Pages:
             ('\N{INFORMATION SOURCE}', self.show_help),
         ]
 
-        server = self.message.server
+        server = self.message.guild
         if server is not None:
             self.permissions = self.message.channel.permissions_for(server.me)
         else:
@@ -61,7 +61,7 @@ class Pages:
             for t in entries:
                 p.append('%s' % t)
 
-        self.embed.set_author(name="[Leveling Guide]", url="https://www.reddit.com/r/treeofsavior/comments/8bg0mb/updated_levelling_guide/", icon_url="http://bestonlinegamesreview.com/wp-content/uploads/2016/04/p1_2006411_5eae6fd9.png")
+        self.embed.set_author(name="[Leveling Guide]", url="https://www.reddit.com/r/treeofsavior/comments/feu1ny/updated_leveling_guide_version_40/", icon_url="http://bestonlinegamesreview.com/wp-content/uploads/2016/04/p1_2006411_5eae6fd9.png")
         self.embed.set_footer(text='Page %s/%s (%s entries)' % (page, self.maximum_pages, len(self.entries)))
 
         if not self.paginating:
